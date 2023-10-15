@@ -33,17 +33,15 @@ void handle_string(va_list args)
  * _printf - entry point. custom print
  * @format: a character string
  * Return: return type is a string
+ * _putchar: a function that prints characters
  */
-
 int _printf(const char *format, ...)
 {
-	int i;
-	int count = 0;
+	size_t i, count = 0;
 	va_list args;
 
 	if (format == NULL)
 		return (-1);
-
 	va_start(args, format);
 	for (i = 0; format[i]; i++)
 	{
@@ -65,6 +63,11 @@ int _printf(const char *format, ...)
 				_putchar('%');
 				if (format[i])
 					_putchar(format[i]);
+				else
+				{
+					va_end(args);
+					return (-1);
+				}
 				break;
 			}
 		}
@@ -72,7 +75,6 @@ int _printf(const char *format, ...)
 			_putchar(format[i]);
 		count++;
 	}
-
 	va_end(args);
 	return (count);
 }
