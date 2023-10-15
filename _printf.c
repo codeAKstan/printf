@@ -11,7 +11,7 @@ void handle_character(va_list args)
 {
 	int character = va_arg(args, int);
 
-	_putchar(character);
+	write(1, &character, 1);
 }
 
 /**
@@ -25,7 +25,7 @@ void handle_string(va_list args)
 
 	while (string && *string)
 	{
-		_putchar(*string);
+	        write(1, string, 1);
 		string++;
 	}
 }
@@ -51,7 +51,7 @@ int _printf(const char *format, ...)
 			switch (format[i])
 			{
 			case '%':
-				_putchar('%');
+				write(1, "%", 1);
 				break;
 			case 'c':
 				handle_character(args);
@@ -60,9 +60,9 @@ int _printf(const char *format, ...)
 				handle_string(args);
 				break;
 			default:
-				_putchar('%');
+			        write(1, "%", 1);
 				if (format[i])
-					_putchar(format[i]);
+					write(1, &format[i], 1);
 				else
 				{
 					va_end(args);
@@ -72,7 +72,7 @@ int _printf(const char *format, ...)
 			}
 		}
 		else
-			_putchar(format[i]);
+		        write(1, &format[i], 1);
 		count++;
 	}
 	va_end(args);
