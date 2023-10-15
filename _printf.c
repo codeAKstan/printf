@@ -1,80 +1,55 @@
+File Edit Options Buffers Tools C Help                                                                                                              
 #include <stdlib.h>
 #include "main.h"
-#include <stdarg.h>
-
-/**
- * handle_character - entry point
- * Function to handle %c specifier
- * @args: the argument it takes
-*/
-void handle_character(va_list args)
-{
-	int character = va_arg(args, int);
-
-	write(1, &character, 1);
-}
-
-/**
- * handle_string - entry point
- * Function to handle %s specifier
- * @args: the argument it takes
-*/
-void handle_string(va_list args)
-{
-	char *string = va_arg(args, char *);
-
-	while (string && *string)
-	{
-	        write(1, string, 1);
-		string++;
-	}
-}
-/**
- * _printf - entry point. custom print
- * @format: a character string
- * Return: return type is a string
- * _putchar: a function that prints characters
+/**                                                                                                                                                 
+ * _printf - entry point. custom print                                                                                                              
+ * @format: a character string                                                                                                                      
+ * Return: return type is a string                                                                                                                  
  */
 int _printf(const char *format, ...)
 {
-	size_t i, count = 0;
-	va_list args;
+        size_t c, count = 0, len = 0;
+        char *s;
+        va_list args;
 
-	if (format == NULL)
-		return (-1);
-	va_start(args, format);
-	for (i = 0; format[i]; i++)
-	{
-		if (format[i] == '%')
-		{
-			i++;
-			switch (format[i])
-			{
-			case '%':
-				write(1, "%", 1);
-				break;
-			case 'c':
-				handle_character(args);
-				break;
-			case 's':
-				handle_string(args);
-				break;
-			default:
-			        write(1, "%", 1);
-				if (format[i])
-					write(1, &format[i], 1);
-				else
-				{
-					va_end(args);
-					return (-1);
-				}
-				break;
-			}
-		}
-		else
-		        write(1, &format[i], 1);
-		count++;
-	}
-	va_end(args);
-	return (count);
+        if (format == NULL)
+                return (-1);
+
+        va_start(args, format);
+        while (*format)
+        {
+                if (*format != '%')
+                {
+                        write(1, format, 1);
+                        count++;
+                }
+                else
+                {
+                        format++;
+                        if (*format == '\0')
+                                break;
+                        if (*format == '%')
+                        {
+                                write(1, format, 1);
+                                count++;
+                        }
+                        else if (*format == 'c')
+                        {
+                                c = va_arg(args, int);
+                                write(1, &c, 1);
+                                count++;
+                        }
+                        else if (*format == 's')
+                        {
+                                s = va_arg(args, char *);
+                                while (s[len] != '\0')
+                                        len++;
+                                write(1, s, len);
+                                count += len;
+                        }
+                }
+                format++;
+        }
+        va_end(args);
+        return (count);
 }
