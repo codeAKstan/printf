@@ -1,7 +1,5 @@
 #include <stdlib.h>
 #include "main.h"
-void print_unknown_specifier(char specifier, size_t *count);
-void print_null_or_str(char *s, size_t *count);
 /**
  * print_null_or_str - entry point
  * @s: a string of characters
