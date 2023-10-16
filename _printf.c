@@ -33,7 +33,7 @@ void print_unknown_specifier(char specifier, size_t *count)
 {
 	write(1, "%", 1);
 	write(1, &specifier, 1);
-	(*count) += 2;
+	(*count)++;
 }
 /**
  * _printf - entry point. custom printf
