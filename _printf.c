@@ -33,7 +33,7 @@ void print_unknown_specifier(char specifier, size_t *count)
 {
 	write(1, "%", 1);
 	write(1, &specifier, 1);
-	(*count)++;
+	(*count) += 2;
 }
 /**
  * _printf - entry point. custom printf
@@ -71,7 +71,9 @@ int _printf(const char *format, ...)
 				print_null_or_str(s, &count);
 			}
 			else
+			{
 				print_unknown_specifier(*format, &count);
+			}
 		}
 		format++;
 	}
