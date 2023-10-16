@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include "main.h"
+void print_unknown_specifier(char specifier, size_t *count);
+void print_null_or_str(char *s, size_t *count);
 /**
  * print_null_or_str - entry point
  * @s: a string of characters
@@ -31,7 +33,7 @@ void print_unknown_specifier(char specifier, size_t *count)
 {
 	write(1, "%", 1);
 	write(1, &specifier, 1);
-	(*count)++;
+	(*count) += 2;
 }
 /**
  * _printf - entry point. custom printf
