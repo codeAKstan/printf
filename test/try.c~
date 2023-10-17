@@ -1,5 +1,9 @@
 #include <stdlib.h>
 #include "main.h"
+void print_binary(unsigned int num, size_t *count);
+void print_integer(int num, size_t *count);
+void print_unknown_specifier(char specifier, size_t *count);
+void print_null_or_str(char *s, size_t *count);
 /**
 * print_binary - entry point
 * @num: variable of type unsigned int
@@ -72,6 +76,7 @@ void print_integer(int num, size_t *count)
 		write(1, &num_str[i], 1);
 		(*count)++;
 	}
+
 	free(num_str);
 }
 /**
@@ -114,7 +119,9 @@ void print_unknown_specifier(char specifier, size_t *count)
  */
 int _printf(const char *format, ...)
 {
-	size_t count = 0;
+	size_t c, count = 0;
+	size_t num;
+	char *s;
 	va_list args;
 
 	if (format == NULL)
@@ -131,8 +138,30 @@ int _printf(const char *format, ...)
 				break;
 			if (*format == '%')
 				write(1, format, 1), count++;
+			else if (*format == 'c')
+			{
+				c = va_arg(args, int);
+				write(1, &c, 1), count++;
+			}
+			else if (*format == 'd' || *format == 'i')
+			{
+				num = va_arg(args, int);
+				print_integer(num, &count);
+			}
+			else if (*format == 's')
+			{
+				s = va_arg(args, char *);
+				print_null_or_str(s, &count);
+			}
+			else if (*format == 'b')
+			{
+				num = va_arg(args, unsigned int);
+				print_binary(num, &count);
+			}
 			else
-				handle_format_specifier(*format, args, &count);
+			{
+				print_unknown_specifier(*format, &count);
+			}
 		}
 		format++;
 	}

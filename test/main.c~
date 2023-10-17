@@ -1,0 +1,20 @@
+#include <limits.h>
+#include <stdio.h>
+#include "main.h"
+
+/**
+ * main - Entry point
+ *
+ * Return: Always 0
+ */
+int main(void)
+{
+        int ret = _printf("what?");
+	_printf("\n%d\n", ret);
+        ret = _printf("What%s", "The?");
+        ret = _printf("What%The");
+	_printf("\n%d\n", ret);
+        ret = _printf("what%s", NULL);
+
+        return (0);
+}
