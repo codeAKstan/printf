@@ -10,4 +10,9 @@ int _putchar(char c);
 int _printf(const char *format, ...);
 void print_unknown_specifier(char specifier, size_t *count);
 void print_null_or_str(char *s, size_t *count);
+void print_unsigned(unsigned int num, size_t *count);
+void print_octal(unsigned int num, size_t *count);
+void print_hex(unsigned int num, int uppercase, size_t *count);
+void print_binary(unsigned int num, size_t *count);
+void print_integer(int num, size_t *count);
 #endif
