@@ -1,8 +1,35 @@
 #include <stdlib.h>
 #include "main.h"
+void print_binary(unsigned int num, size_t *count);
 void print_integer(int num, size_t *count);
 void print_unknown_specifier(char specifier, size_t *count);
 void print_null_or_str(char *s, size_t *count);
+/**
+* print_binary - entry point
+* @num: variable of type unsigned int
+* @count: number count
+*/
+void print_binary(unsigned int num, size_t *count)
+{
+	char bin_str[32];
+	int len = 0;
+	int i;
+
+	while (num > 0)
+	{
+		bin_str[len++] = (num % 2) + '0';
+		num = num / 2;
+	}
+
+	if (len == 0)
+		bin_str[len++] = '0';
+
+	for (i = len - 1; i >= 0; i--)
+	{
+		write(1, &bin_str[i], 1);
+		(*count)++;
+	}
+}
 /**
 * print_integer - entry point
 * @num: variable of type int
@@ -108,6 +135,11 @@ int _printf(const char *format, ...)
 			{
 				s = va_arg(args, char *);
 				print_null_or_str(s, &count);
+			}
+			else if (*format == 'b')
+			{
+				num = va_arg(args, unsigned int);
+				print_binary(num, &count);
 			}
 			else
 			{
